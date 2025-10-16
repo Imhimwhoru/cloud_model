@@ -1,0 +1,18 @@
+LOAD BALANCER VM:
+Sudo apt update
+Sudo apt install haproxy
+sudo nano /etc/haproxy/haproxy.cfg
+frontend http_front
+    bind *:80
+    default_backend web_servers
+
+backend web_servers
+    balance roundrobin
+    server web1 192.168.48.138:80 check
+    server web2 192.168.48.139:80 check
+sudo systemctl restart haproxy
+WEB SERVERS:
+Sudo apt update
+Sudo apt install apache2 -y
+echo "Life is full of suprises This is from clone og 1" | sudo tee /var/www/html/index.html
+echo "hello from Server 2" | sudo tee /var/www/html/index.html
